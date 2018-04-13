@@ -5,6 +5,11 @@ jobs:
       - image: circleci/golang
     steps:
       - run:
-          name: Clone Ethereum source
-          command:
+          name: Clone Ethereum Go client source
+          command: |
             git clone https://github.com/ethereum/go-ethereum.git
+      - run:
+          name: Build Ethereum Go client
+          command: |
+            cd go-ethereum
+            make geth

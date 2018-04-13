@@ -1,0 +1,10 @@
+version: 2
+jobs: 
+  build:
+    docker:
+      - image: circleci/golang
+    steps:
+      - run:
+          name: Clone Ethereum source
+          command:
+            git clone https://github.com/ethereum/go-ethereum.git

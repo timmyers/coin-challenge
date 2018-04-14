@@ -18,3 +18,8 @@ jobs:
             sudo rm -rf ~/.docker/config.json
             sudo docker login --username timmyers --password $DOCKERHUB_PW
             ansible-container --engine docker deploy --username timmyers --password ${DOCKERHUB_PW} --push-to dockerhub
+      - run: 
+          name: View artifacts
+          command: |
+            ls ansible-deployment
+            cat ansible-deployment/coin-challenge.yml

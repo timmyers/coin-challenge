@@ -5,6 +5,7 @@ jobs:
       image: circleci/classic:latest
     steps:
       - checkout
+      - run: python -v
       - run: 
           name: Install ansible-container
           command: sudo pip install ansible-container[docker]

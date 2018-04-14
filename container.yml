@@ -5,6 +5,11 @@ settings:
     base: ubuntu:xenial
   project_name: coin-challenge
 
+registries:
+  dockerhub:
+    url: https://index.docker.io/v1/
+    namespace: timmyers
+
 services:
   go-ethereum:
     from: ubuntu:xenial

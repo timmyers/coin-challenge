@@ -2,14 +2,13 @@ version: 2
 jobs: 
   build:
     docker:
-      - image: circleci/golang
+      - image: circleci/python
     steps:
+      - checkout
+      - setup_remote_docker
       - run:
-          name: Clone Ethereum Go client source
-          command: |
-            git clone https://github.com/ethereum/go-ethereum.git
+          name: Install ansible-container
+          command: pip install ansible-container[docker]
       - run:
-          name: Build Ethereum Go client
-          command: |
-            cd go-ethereum
-            make geth
+          name: Build ansible-container
+          command: ansible-container build

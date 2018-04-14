@@ -1,0 +1,40 @@
+---
+- name: Install dumb init
+  get_url:
+    dest: /usr/bin/dumb-init
+    url: https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64
+    mode: 0775
+    validate_certs: no
+- name: Create go-ethereum user
+  user:
+    name: go-ethereum
+    uid: 1000
+    group: root
+    state: present
+    createhome: yes
+    home: /go-ethereum
+- name: Install git
+  apt:
+    name: git
+    state: latest
+    update_cache: yes
+- name: Download golang binary
+  get_url:
+    dest: /tmp
+    url: https://dl.google.com/go/go1.10.1.linux-amd64.tar.gz
+    validate_certs: no
+- name: Install golang
+  unarchive:
+    src: /tmp/go1.10.1.linux-amd64.tar.gz
+    dest: /usr/local
+    remote_src: yes
+- name: Clone Ethereum from github
+  git:
+    repo: 'https://github.com/ethereum/go-ethereum.git'
+    dest: /go-ethereum/repo
+    version: v1.8.3
+- name: Build Ethereum
+  make:
+    chdir: /go-ethereum/repo
+    target: geth
+

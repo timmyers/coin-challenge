@@ -1,0 +1,13 @@
+version: "2"
+
+settings:
+  conductor:
+    base: ubuntu:xenial
+  project_name: coin-challenge
+
+services:
+  go-ethereum:
+    from: ubuntu:xenial
+    roles:
+      - go-ethereum
+    user: go-ethereum

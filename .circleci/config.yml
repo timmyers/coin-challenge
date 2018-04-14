@@ -12,3 +12,6 @@ jobs:
           name: Instrall ansible-container
           command: pip install ansible-container[docker]
       - run: ansible-container build
+      - run: 
+          name: ansible-container deploy
+          command: ansible-container --engine docker deploy --username timmyers --password ${DOCKERHUB_PW} --push-to dockerhub

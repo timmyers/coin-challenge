@@ -2,7 +2,7 @@ version: 2
 jobs: 
   build:
     machine: 
-      image: circleci/classic:latest
+      image: circleci/classic:201711-01
     steps:
       - checkout
       - run:
@@ -12,7 +12,7 @@ jobs:
             sudo apt-get update
             sudo apt-get install python2.7
             # sudo pip install --upgrade python
-            # sudo python -m pip install --upgrade pip setuptools python wheel
+            sudo python -m pip install --upgrade pip setuptools python wheel
       - run: 
           name: Install ansible-container
           command: sudo pip install ansible-container[docker]

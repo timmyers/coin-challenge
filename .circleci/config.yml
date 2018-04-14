@@ -15,5 +15,6 @@ jobs:
       - run: 
           name: ansible-container deploy
           command: |
-            docker login --username timmyers --password $DOCKERHUB_PW
+            rm -rf ~/.docker/config.json
+            sudo docker login --username timmyers --password $DOCKERHUB_PW
             ansible-container --engine docker deploy --username timmyers --password ${DOCKERHUB_PW} --push-to dockerhub

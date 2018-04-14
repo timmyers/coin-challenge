@@ -7,8 +7,5 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          name: Install ansible-container
-          command: pip install ansible-container[docker]
-      - run:
           name: Build ansible-container
           command: ansible-container build

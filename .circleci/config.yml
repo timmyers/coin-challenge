@@ -1,11 +1,18 @@
 version: 2
 jobs: 
   build:
-    docker:
-      - image: timmyers/coin-challenge-ci
+    machine: 
+      image: circleci/classic:latest
     steps:
       - checkout
-      - setup_remote_docker
-      - run:
-          name: Build ansible-container
-          command: ansible-container build
+      - run: docker ps
+
+    
+    # docker:
+    #   - image: timmyers/coin-challenge-ci
+    # steps:
+    #   - checkout
+    #   - setup_remote_docker
+    #   - run:
+    #       name: Build ansible-container
+    #       command: ansible-container build

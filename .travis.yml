@@ -6,3 +6,4 @@ python:
 
 script:
  - sudo pip install ansible-container
+ - ansible-container build

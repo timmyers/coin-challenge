@@ -10,4 +10,7 @@ services:
     from: ubuntu:xenial
     roles:
       - go-ethereum
+    entrypoint: /usr/bin/dumb-init
+    command: ./build/bin/geth 
+    working_dir: /go-ethereum/repo
     user: go-ethereum

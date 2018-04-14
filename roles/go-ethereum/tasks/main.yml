@@ -18,6 +18,11 @@
     name: git
     state: latest
     update_cache: yes
+- name: Install libc-dev
+  apt:
+    name: libc-dev
+    state: latest
+    update_cache: yes
 - name: Download golang binary
   get_url:
     dest: /tmp
@@ -29,12 +34,15 @@
     dest: /usr/local
     remote_src: yes
 - name: Clone Ethereum from github
+  remote_user: go-ethereum
   git:
     repo: 'https://github.com/ethereum/go-ethereum.git'
     dest: /go-ethereum/repo
     version: v1.8.3
 - name: Build Ethereum
+  remote_user: go-ethereum
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin"
   make:
     chdir: /go-ethereum/repo
     target: geth
-

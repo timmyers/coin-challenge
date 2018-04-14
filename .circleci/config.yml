@@ -7,7 +7,9 @@ jobs:
       - checkout
       - run:
           name: Update pip, setuptools
-          command: python -m pip install --upgrade pip setuptools wheel
+          command: |
+            sudo pip install --upgrade python
+            sudo python -m pip install --upgrade pip setuptools python wheel
       - run: 
           name: Install ansible-container
           command: sudo pip install ansible-container[docker]

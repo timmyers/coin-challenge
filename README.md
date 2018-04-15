@@ -19,3 +19,13 @@ The CircleCI workflow is split into two jobs.
   * Initiates a docker container with a [Fedora Atomic AMI](https://getfedora.org/en/atomic/download/).
   * Pulls down the docker image previous pushed to dockerhub on the new EC2 instance.
   * Runs the docker container, starting the ethereum node on the EC2 instance.
+
+## TODO's (future improvements)
+* Start geth as a full node (currently running `--syncmode "light"` to be faster).
+* Deploy with a persistent storage volume, so that node doesn't have to resync from scratch on every deploy (duh)
+* DNS - Create a consistent DNS endpoint where the node's RPC API can be accessed.
+* Implement security of RPC endpoint so that not just anyone can access it.
+* Use alpine linux for container so that resulting image is not so big.
+* Leverage a Kubernetes cluster to orchestrate container deployments, rather than a single EC2 instance.
+* Automatically update and deploy when geth repository has a new version.
+* Implement some testing into the deploy process to verify that the new node is operating as expected.

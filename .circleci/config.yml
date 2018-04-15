@@ -29,6 +29,9 @@ jobs:
       - image: timmyers/coin-challenge-ci
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "8c:9a:c9:52:86:a4:a3:a9:1d:4d:75:0f:58:7b:1a:83"
       - run:
           name: Run ansible deploy playbook
           command: |

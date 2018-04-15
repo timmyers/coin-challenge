@@ -2,7 +2,7 @@
   hosts: localhost
   gather_facts: False
   vars:
-    key_name: MBP
+    key_name: coinchallenge
     instance_type: t2.micro
     image: ami-8260f9fa
     region: us-west-2

@@ -41,15 +41,27 @@
   become_user: root
   gather_facts: True
   tasks:
-    - docker_service:
-        definition:
-          services: 
-            go-ethereum:
-              entrypoint: /usr/bin/dumb-init
-              image: "timmyers/coin-challenge-go-ethereum:{{ lookup('env','CIRCLE_SHA1') }}"
-              command: ./build/bin/geth
-              user: go-ethereum
-              working_dir: /go-ethereum/repo
-          version: '2'
-        state: present
-        project_name: coin-challenge
+    - name: Pull docker image
+      docker_image:
+        name: "timmyers/coin-challenge-go-ethereum:{{ lookup('env','CIRCLE_SHA1') }}"
+    - name: Start docker container
+      docker_container:
+        name: geth
+        image: "timmyers/coin-challenge-go-ethereum:{{ lookup('env','CIRCLE_SHA1') }}"
+        entrypoint: /usr/bin/dumb-init
+        command: ./build/bin/geth
+        user: go-ethereum
+        working_dir: /go-ethereum/repo
+
+    # - docker_service:
+    #     definition:
+    #       services: 
+    #         go-ethereum:
+    #           entrypoint: /usr/bin/dumb-init
+    #           image: "timmyers/coin-challenge-go-ethereum:{{ lookup('env','CIRCLE_SHA1') }}"
+    #           command: ./build/bin/geth
+    #           user: go-ethereum
+    #           working_dir: /go-ethereum/repo
+    #       version: '2'
+    #     state: present
+    #     project_name: coin-challenge

@@ -8,18 +8,13 @@ jobs:
       - run:
           name: Pin python docker version
           command: pip install docker==2.7.0
-      # - run:
-      #     name: Install python deps
-      #     command: |
-      #       pip install docker==2.7.0
-      #       pip install docker-compose
       - run:
-          name: Install ansible and ansible-container
+          name: Install ansible-container
           command: |
             pip install ansible-container[docker]
       - run: ansible-container build
       - run: 
-          name: ansible-container push
+          name: ansible-container push (to dockerhub)
           command: |
             sudo rm -rf ~/.docker/config.json
             sudo docker login --username timmyers --password $DOCKERHUB_PW

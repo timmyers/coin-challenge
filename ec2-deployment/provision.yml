@@ -7,6 +7,11 @@
     image: ami-8260f9fa
     region: us-west-2
   tasks:
+    - name: Terminate old instances
+      ec2:
+        state: 'absent'
+        instance_tags:
+          application: coin-challenge
     - name: Launch instance
       ec2:
          key_name: "{{ key_name }}"
@@ -16,6 +21,8 @@
          region: "{{ region }}"
          assign_public_ip: True
          vpc_subnet_id: subnet-274a0051
+         instance_tags:
+          application: coin-challenge
       register: ec2
 
     - name: Add new instance to host group
@@ -49,7 +56,7 @@
         name: geth
         image: "timmyers/coin-challenge-go-ethereum:{{ lookup('env','CIRCLE_SHA1') }}"
         entrypoint: /usr/bin/dumb-init
-        command: ./build/bin/geth
+        command: ./build/bin/geth --rpc
         user: go-ethereum
         working_dir: /go-ethereum/repo
 

@@ -6,20 +6,24 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Pin python docker version
-          command: pip install docker==2.7.0
+          name: Install python deps
+          command: |
+            pip install docker==2.7.0
+            pip install docker-compose
       - run:
-          name: Instrall ansible-container
-          command: pip install ansible-container[docker]
+          name: Install ansible and ansible-container
+          command: |
+            pip install ansible
+            pip install ansible-container[docker]
       - run: ansible-container build
       - run: 
-          name: ansible-container deploy
+          name: ansible-container push
           command: |
             sudo rm -rf ~/.docker/config.json
             sudo docker login --username timmyers --password $DOCKERHUB_PW
-            ansible-container --engine docker deploy --username timmyers --password ${DOCKERHUB_PW} --push-to dockerhub
-      - run: 
-          name: View artifacts
+            ansible-container push --username timmyers --password ${DOCKERHUB_PW} --push-to dockerhub --tag $CIRCLE_SHA1
+      - run:
+          name: Deploy
           command: |
-            ls ansible-deployment
-            cat ansible-deployment/coin-challenge.yml
+            cd ec2-deployment
+            ansible-playbook provision.yml

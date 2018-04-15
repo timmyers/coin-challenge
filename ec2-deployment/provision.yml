@@ -1,0 +1,55 @@
+- name: Create an atomic fedora EC2 instance
+  hosts: localhost
+  gather_facts: False
+  vars:
+    key_name: MBP
+    instance_type: t2.micro
+    image: ami-8260f9fa
+    region: us-west-2
+  tasks:
+    - name: Launch instance
+      ec2:
+         key_name: "{{ key_name }}"
+         instance_type: "{{ instance_type }}"
+         image: "{{ image }}"
+         wait: true
+         region: "{{ region }}"
+         assign_public_ip: True
+         vpc_subnet_id: subnet-274a0051
+      register: ec2
+
+    - name: Add new instance to host group
+      add_host:
+        hostname: "{{ item.public_ip }}"
+        groupname: launched
+      with_items: "{{ ec2.instances }}"
+
+    - name: Wait for SSH to come up
+      wait_for:
+        host: "{{ item.public_dns_name }}"
+        port: 22
+        delay: 60
+        timeout: 320
+        state: started
+      with_items: "{{ ec2.instances }}"
+
+- name: Configure instance with remote docker daemon
+  hosts: launched
+  remote_user: fedora
+  become: True
+  become_method: sudo
+  become_user: root
+  gather_facts: True
+  tasks:
+    - docker_service:
+        definition:
+          services: 
+            go-ethereum:
+              entrypoint: /usr/bin/dumb-init
+              image: "timmyers/coin-challenge-go-ethereum:{{ lookup('env','CIRCLE_SHA1') }}"
+              command: ./build/bin/geth
+              user: go-ethereum
+              working_dir: /go-ethereum/repo
+          version: '2'
+        state: present
+        project_name: coin-challenge

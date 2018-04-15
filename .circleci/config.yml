@@ -16,9 +16,7 @@ jobs:
       - run:
           name: Install ansible and ansible-container
           command: |
-            pip install ansible
             pip install ansible-container[docker]
-            pip install boto
       - run: ansible-container build
       - run: 
           name: ansible-container push
@@ -26,8 +24,21 @@ jobs:
             sudo rm -rf ~/.docker/config.json
             sudo docker login --username timmyers --password $DOCKERHUB_PW
             ansible-container push --username timmyers --password ${DOCKERHUB_PW} --push-to dockerhub --tag $CIRCLE_SHA1
+  deploy:
+    docker:
+      - image: timmyers/coin-challenge-ci
+    steps:
       - run:
-          name: Deploy
+          name: Run ansible deploy playbook
           command: |
             cd ec2-deployment
             ansible-playbook provision.yml
+
+workflows:
+  version: 2
+  Build and Deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build

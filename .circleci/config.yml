@@ -33,6 +33,7 @@ jobs:
           name: Run ansible deploy playbook
           command: |
             cd ec2-deployment
+            export ANSIBLE_HOST_KEY_CHECKING=False
             ansible-playbook provision.yml
 
 workflows:

@@ -71,5 +71,5 @@
         user: go-ethereum
         working_dir: /go-ethereum/repo
         published_ports: 
-          - 8545
-          - 30303
+          - 8545:8545
+          - 30303:30303

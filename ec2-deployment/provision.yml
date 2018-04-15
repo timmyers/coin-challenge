@@ -13,12 +13,15 @@
         filters:
           "tag:Application": coin-challenge
       register: old_instances
+
     - name: Terminate old instances
       ec2:
         state: 'absent'
-        instance_ids: "{{ item }}"
+        instance_ids: 
+          - "{{ item.instance_id }}"
         region: "{{ region }}"
       with_items: "{{ old_instances.instances }}"
+
     - name: Launch instance
       ec2:
         key_name: "{{ key_name }}"

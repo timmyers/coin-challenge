@@ -15,6 +15,9 @@ services:
     from: ubuntu:xenial
     roles:
       - go-ethereum
+    ports:
+      - "8545:8545"
+      - "30303:30303"
     entrypoint: /usr/bin/dumb-init
     command: ./build/bin/geth 
     working_dir: /go-ethereum/repo

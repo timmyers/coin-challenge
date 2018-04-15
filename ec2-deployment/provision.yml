@@ -7,12 +7,17 @@
     image: ami-8260f9fa
     region: us-west-2
   tasks:
+    - name: Find old instances
+      ec2_instance_facts:
+      register: old_instances
+      filters:
+        "tag:Application": coin-challenge
     - name: Terminate old instances
       ec2:
         state: 'absent'
+        instance_ids: "{{ item }}"
         region: "{{ region }}"
-        instance_tags:
-          Application: coin-challenge
+        with_items: "{{ old_instances.instances }}"
     - name: Launch instance
       ec2:
         key_name: "{{ key_name }}"

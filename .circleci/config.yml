@@ -18,6 +18,7 @@ jobs:
           command: |
             pip install ansible
             pip install ansible-container[docker]
+            pip install boto
       - run: ansible-container build
       - run: 
           name: ansible-container push

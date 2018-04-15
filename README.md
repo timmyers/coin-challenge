@@ -29,3 +29,4 @@ The CircleCI workflow is split into two jobs.
 * Leverage a Kubernetes cluster to orchestrate container deployments, rather than a single EC2 instance.
 * Automatically update and deploy when geth repository has a new version.
 * Implement some testing into the deploy process to verify that the new node is operating as expected.
+* Lock down the master branch, and create a PR workflow that builds (and ideally tests) new versions of code before they may be merged in.

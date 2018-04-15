@@ -28,6 +28,7 @@ jobs:
     docker:
       - image: timmyers/coin-challenge-ci
     steps:
+      - checkout
       - run:
           name: Run ansible deploy playbook
           command: |

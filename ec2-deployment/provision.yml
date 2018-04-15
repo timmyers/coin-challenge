@@ -18,7 +18,7 @@
         state: 'absent'
         instance_ids: "{{ item }}"
         region: "{{ region }}"
-        with_items: "{{ old_instances.instances }}"
+      with_items: "{{ old_instances.instances }}"
     - name: Launch instance
       ec2:
         key_name: "{{ key_name }}"

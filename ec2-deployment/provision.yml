@@ -10,19 +10,20 @@
     - name: Terminate old instances
       ec2:
         state: 'absent'
+        region: "{{ region }}"
         instance_tags:
-          application: coin-challenge
+          Application: coin-challenge
     - name: Launch instance
       ec2:
-         key_name: "{{ key_name }}"
-         instance_type: "{{ instance_type }}"
-         image: "{{ image }}"
-         wait: true
-         region: "{{ region }}"
-         assign_public_ip: True
-         vpc_subnet_id: subnet-274a0051
-         instance_tags:
-          application: coin-challenge
+        key_name: "{{ key_name }}"
+        instance_type: "{{ instance_type }}"
+        image: "{{ image }}"
+        wait: true
+        region: "{{ region }}"
+        assign_public_ip: True
+        vpc_subnet_id: subnet-274a0051
+        instance_tags:
+          Application: coin-challenge
       register: ec2
 
     - name: Add new instance to host group

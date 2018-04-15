@@ -6,10 +6,13 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install python deps
-          command: |
-            pip install docker==2.7.0
-            pip install docker-compose
+          name: Pin python docker version
+          command: pip install docker==2.7.0
+      # - run:
+      #     name: Install python deps
+      #     command: |
+      #       pip install docker==2.7.0
+      #       pip install docker-compose
       - run:
           name: Install ansible and ansible-container
           command: |
